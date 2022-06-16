@@ -1,76 +1,90 @@
 #include "sort.h"
 
 /**
-* partition - Lomutu partition scheme for quicksort algorithm
-* @a: Array to sort
-* @l: lowest index of array
-* @h: highest index of array
-* Return: index of pivot
-*/
-
-int partition(int *a, int l, int h)
-{
-	int p, i, j, t;
-	static int size, k;
-
-	if (k == 0)
-		size = h + 1, k++;
-	p = a[h];
-	i = l;
-	for (j = l; j < h; j++)
-	{
-		if (a[j] <= p)
-		{
-			if (i != j)
-			{
-				t = a[i];
-				a[i] = a[j];
-				a[j] = t;
-				print_array(a, size);
-			}
-			i++;
-		}
-	}
-	if (i != h)
-	{
-		t = a[i];
-		a[i] = a[h];
-		a[h] = t;
-		print_array(a, size);
-	}
-
-	return (i);
-}
-
-/**
-* qs - Quicksort recurssive function
-* @a: array to sort
-* @l: lowest index
-* @h: highest index
-*/
-
-void qs(int *a, int l, int h)
-{
-	int p;
-
-	if (l < h)
-	{
-		p = partition(a, l, h);
-		qs(a, l, p - 1);
-		qs(a, p + 1, h);
-	}
-}
-
-
-/**
-* quick_sort - sorts array using quicksort algorithm
-* @array: Array to sort
-* @size: Size of array to sort
-*/
-
+ * quick_sort - sorts an array of integers
+ * in ascending order using the Quick sort algorithm
+ * @array: array to sort
+ * @size: size of the array
+ * Return: void
+ */
 void quick_sort(int *array, size_t size)
 {
-	if (array == NULL)
-		return;
-	qs(array, 0, size - 1);
+if (array == NULL || size < 2)
+return;
+
+sort(array, 0, size - 1, size);
+}
+
+/**
+ * sort - function to call recursively and create new pivots
+ * @array: array to be sorted
+ * @start: beginning of sorting array
+ * @end: end of sorting array
+ * @size: size of array
+ * Return: void
+ */
+void sort(int *array, size_t start, size_t end, size_t size)
+{
+size_t pivot;
+
+if (end == 0 || end <= start)
+return;
+
+/*call partition to create pivot*/
+pivot = partition(array, start, end, size);
+
+/*after partitioning we find the position of sorted element(pivot)*/
+if (pivot != 0 && pivot > start)
+sort(array, start, pivot - 1, size);/*sort left hand size*/
+
+if (pivot < size - 1)/*the other end*/
+sort(array, pivot + 1, end, size);/*sort right hand size*/
+}
+
+/**
+ * partition - function to partition array according to pivot
+ * @array: array to be partitioned
+ * @start: beginning of comparison index
+ * @pivot: partition index
+ * @size: size of array
+ * Return: pivot
+ */
+size_t partition(int *array, size_t start, size_t pivot, size_t size)
+{
+size_t i;
+
+for (i = start; i < pivot; i++)
+{
+if (array[i] < array[pivot])
+{
+if (i != start)/*i has incremented. < pivot*/
+{
+swap(&array[start], &array[i]);
+print_array(array, size);
+}
+start++;
+}
+}
+if (array[start] > array[pivot])
+{
+swap(&array[start], &array[pivot]);
+pivot = start;
+print_array(array, size);
+}
+return (pivot);
+}
+
+/**
+ * swap - function to swap elements
+ * @i: pointer to element 1
+ * @j: pointer to element 2
+ * Return: void
+ */
+void swap(int *i, int *j)
+{
+int temp = 0;
+
+temp = *i;
+*i = *j;
+*j = temp;
 }
