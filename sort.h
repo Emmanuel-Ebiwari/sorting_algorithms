@@ -1,8 +1,9 @@
 #ifndef SORT_H
 #define SORT_H
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * struct listint_s - Doubly linked list node
@@ -13,86 +14,63 @@
  */
 typedef struct listint_s
 {
-const int n;
-struct listint_s *prev;
-struct listint_s *next;
+	const int n;
+	struct listint_s *prev;
+	struct listint_s *next;
 } listint_t;
 
-
-/**
- * enum kind_e - Playing card
- *
- * @SPADE: Value of the card
- * @HEART: Value of the card
- * @CLUB: Value of the card
- * @DIAMOND: Value of the card
- */
-typedef enum kind_e
-{
-SPADE = 0,
-HEART,
-CLUB,
-DIAMOND
-} kind_t;
-
-/**
- * struct card_s - Playing card
- *
- * @value: Value of the card
- * From "Ace" to "King"
- * @kind: Kind of the card
- */
-typedef struct card_s
-{
-const char *value;
-const kind_t kind;
-} card_t;
-
-/**
- * struct deck_node_s - Deck of card
- *
- * @card: Pointer to the card of the node
- * @prev: Pointer to the previous node of the list
- * @next: Pointer to the next node of the list
- */
-typedef struct deck_node_s
-{
-const card_t *card;
-struct deck_node_s *prev;
-struct deck_node_s *next;
-} deck_node_t;
-
-/*print array and print list prototypes*/
-void print_array(const int *array, size_t size);
+/** provided functions */
 void print_list(const listint_t *list);
+void print_array(const int *array, size_t size);
 
-/*Files prototypes*/
+/** 0 */
 void bubble_sort(int *array, size_t size);
+
+/** 1 */
 void insertion_sort_list(listint_t **list);
+void swapem(listint_t *l, listint_t *r, listint_t **h);
 
-/*insertion_sort_list helper function*/
-void _swap(listint_t *node1, listint_t *node2, listint_t **head);
-
+/** 2 */
 void selection_sort(int *array, size_t size);
+
+/** 3 */
 void quick_sort(int *array, size_t size);
+int partition(int *a, int l, int h);
+void qs(int *a, int l, int h);
 
-/*quick_sort helper functions*/
-void sort(int *array, size_t start, size_t end, size_t size);
-size_t partition(int *array, size_t start, size_t pivot, size_t size);
-void swap(int *a, int *b);
+/** advanced */
 
+/** 4 */
 void shell_sort(int *array, size_t size);
+
+/** 5 */
 void cocktail_sort_list(listint_t **list);
 
-/*cocktail_sort_list helper function*/
-void swapnodes(listint_t *p, listint_t *c, listint_t **list);
-
+/** 6 */
 void counting_sort(int *array, size_t size);
+int findmax(int *array, size_t size);
+int count(int *array, size_t size, int val);
+
+/** 7 */
 void merge_sort(int *array, size_t size);
+void merge(int *array, int low, int middle, int high, int *temp);
+void merge_sorty(int *array, int low, int high, int *temp);
+
+/** 8 */
 void heap_sort(int *array, size_t size);
+
+/** 9 */
 void radix_sort(int *array, size_t size);
+void counting_sort_r(int *array, size_t size, int pos, int *out, int *ca);
+
+/** 10 */
 void bitonic_sort(int *array, size_t size);
+void swapint(int *l, int *r);
+void b_sort(int *array, int low, int count, int dir, size_t size);
+void b_merge(int *array, int low, int count, int dir, size_t size);
+
+/** 11 */
 void quick_sort_hoare(int *array, size_t size);
-void sort_deck(deck_node_t **deck);
+int partition_hoare(int *a, int l, int h);
 
 #endif
